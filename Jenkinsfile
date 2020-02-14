@@ -1,3 +1,4 @@
+def CHANNEL = "moo"
 pipeline {
     agent any
 
@@ -7,7 +8,7 @@ pipeline {
                 /*
                 sh 'printenv'
                 */
-                sh "echo ${env.GIT_BRANCH}"
+                sh "echo ${env.GIT_BRANCH} ${CHANNEL}"
             }
         }
     }
