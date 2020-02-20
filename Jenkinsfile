@@ -6,9 +6,9 @@ pipeline {
         stage("foo") {
             steps {
                 /*
-                sh 'printenv'
-                */
                 sh "echo ${env.GIT_BRANCH} ${CHANNEL}"
+                */
+                sh 'printenv'
             }
         }
     }
