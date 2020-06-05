@@ -1,14 +1,10 @@
-def CHANNEL = "moo"
 pipeline {
     agent any
 
     stages {
-        stage("foo") {
+        stage("build") {
             steps {
-                /*
-                sh "echo ${env.GIT_BRANCH} ${CHANNEL}"
-                */
-                sh 'printenv'
+                test_library()
             }
         }
     }
