@@ -1,12 +1,4 @@
-pipeline {
-    agent any
+@Library('test')_
 
-    stages {
-        stage("build") {
-            steps {
-                test_library()
-            }
-        }
-    }
-}
+test(['build', 'package', 'test', 'sign', 'deploy'])
 
