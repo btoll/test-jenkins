@@ -1,12 +1,14 @@
 // https://stackoverflow.com/a/54539868
 def call(List<String> targets) {
     node {
-        git branch: 'derp', url: 'https://github.com/algorand/indexer.git'
+//        git branch: 'derp', url: 'https://github.com/algorand/indexer.git'
+        checkout scm
 
-        targets.each {
-            stage (it) {
-                echo it
-                sh "make ${it}"
+        docker.build('foo').inside('-u root') {
+            targets.each {
+                stage (it) {
+                    sh "make ${it}"
+                }
             }
         }
     }
