@@ -1,8 +1,12 @@
 def call(List<String> targets) {
-    withAWS(credentials: "aws-creds") {
-        node {
+    node {
+        checkout scm
+
+        docker.build("derp").inside("-u root") {
             targets.each {
-                run(it)
+//                stage (it) {
+                    sh "make ${it}"
+//                }
             }
         }
     }
