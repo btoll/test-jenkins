@@ -21,10 +21,10 @@ def make(List<String> targets) {
 }
 
 // TODO: Run these in parallel.
-def test(List<String> targets) {
+def test(List<String> archs) {
     podManifest = new Pod()
 
-    targets.each {
+    archs.each {
         yaml = podManifest.getManifest(it)
 
         podTemplate(yaml: yaml) {
