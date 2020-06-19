@@ -10,11 +10,11 @@ def call(List<String> targets) {
             node(POD_LABEL) {
                 checkout scm
 
-                container("mule") {
+                container("make") {
                     targets.each {
     //                    stage(it) {
                             log.info "Testing on arch ${it}"
-                            sh "mule -f mule.yaml test"
+                            sh "make test"
     //                    }
                     }
                 }

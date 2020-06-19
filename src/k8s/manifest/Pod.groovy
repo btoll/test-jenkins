@@ -1,8 +1,7 @@
 package k8s.manifest
 
 public class Pod implements Serializable {
-    private String name = "mule-agent-foo"
-    private String muleVersion = "0.0.10"
+    private String name = "make"
     private String cpu = "2000m"
     private String memory = "1024M"
 
@@ -16,8 +15,8 @@ spec:
   nodeSelector:
     type: worker
   containers:
-  - name: mule
-    image: algorand/mule:${this.muleVersion}
+  - name: make
+    image: btoll/make:latest
     command: [ "sleep", "21600" ]
     env:
     - name: DOCKER_HOST

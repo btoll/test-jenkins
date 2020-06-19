@@ -6,6 +6,7 @@ def call(List<String> targets) {
             docker.build("foo").inside("-u root") {
                 targets.each {
                     stage (it) {
+                        log.info "Running ${target}"
                         sh "make ${it}"
                     }
                 }

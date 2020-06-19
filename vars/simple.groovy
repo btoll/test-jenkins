@@ -8,10 +8,10 @@ def make(List<String> targets) {
         node(POD_LABEL) {
             checkout scm
 
-            container("mule") {
+            container("make") {
                 targets.each {
                     log.info "Running make target ${it}"
-                    sh "mule -f mule.yaml ${it}"
+                    sh "make ${it}"
                 }
             }
         }
@@ -29,9 +29,9 @@ def test(List<String> targets) {
             node(POD_LABEL) {
                 checkout scm
 
-                container("mule") {
+                container("make") {
                     log.info "Testing on arch ${it}"
-                    sh "mule -f mule.yaml test"
+                    sh "make test"
                 }
             }
         }
