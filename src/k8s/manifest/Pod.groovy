@@ -16,7 +16,7 @@ spec:
     type: worker
   containers:
   - name: make
-    image: btoll/make:latest
+    image: btoll/indexer:latest
     command: [ "sleep", "21600" ]
     env:
     - name: DOCKER_HOST
