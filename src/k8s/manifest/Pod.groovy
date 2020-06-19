@@ -1,7 +1,7 @@
 package k8s.manifest
 
 public class Pod implements Serializable {
-    private String name = "make"
+    private String name
     private String cpu = "2000m"
     private String memory = "1024M"
 
@@ -10,13 +10,13 @@ public class Pod implements Serializable {
 apiVersion: v1
 kind: Pod
 metadata:
-  name: ${this.name}
+  name: ${this.name}_v1
 spec:
   nodeSelector:
     type: worker
   containers:
-  - name: make
-    image: btoll/indexer:latest
+  - name: ${this.name}
+    image: btoll/${this.name}:latest
     command: [ "sleep", "21600" ]
     env:
     - name: DOCKER_HOST
