@@ -23,7 +23,7 @@ def test(List<String> targets) {
     podManifest = new Pod()
 
     targets.each {
-        yaml = podManifest.getManifest("${it}")
+        yaml = podManifest.getManifest(it)
 
         podTemplate(yaml: yaml) {
             node(POD_LABEL) {
