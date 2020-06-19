@@ -20,25 +20,29 @@ def make(List<String> targets) {
     }
 }
 
-// TODO: Run these in parallel.
 def test(List<String> archs) {
     podManifest = new Pod(name: "indexer")
+    def pods = [:]
 
     archs.each {
         yaml = podManifest.getManifest(it)
 
-        podTemplate(yaml: yaml) {
-            node(POD_LABEL) {
-                checkout scm
+        pods[it] = {
+            podTemplate(yaml: yaml) {
+                node(POD_LABEL) {
+                    checkout scm
 
-                container("indexer") {
-                    stage ("make test -> ${it}") {
-                        log.info "Testing on arch ${it}"
-                        sh "make test"
+                    container("indexer") {
+                        stage ("make test -> ${it}") {
+                            log.info "Testing on arch ${it}"
+                            sh "make test"
+                        }
                     }
                 }
             }
         }
     }
+
+    parallel pods
 }
 
