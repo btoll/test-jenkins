@@ -10,8 +10,10 @@ def make(List<String> targets) {
 
             container("make") {
                 targets.each {
-                    log.info "Running make target ${it}"
-                    sh "make ${it}"
+                    stage (it) {
+                        log.info "Running make target ${it}"
+                        sh "make ${it}"
+                    }
                 }
             }
         }
@@ -30,8 +32,10 @@ def test(List<String> targets) {
                 checkout scm
 
                 container("make") {
-                    log.info "Testing on arch ${it}"
-                    sh "make test"
+                    stage ("make test -> ${it}") {
+                        log.info "Testing on arch ${it}"
+                        sh "make test"
+                    }
                 }
             }
         }

@@ -4,9 +4,9 @@ def call(List<String> targets) {
 
         docker.build("derp").inside("-u root") {
             targets.each {
-//                stage (it) {
+                stage (it) {
                     sh "make ${it}"
-//                }
+                }
             }
         }
     }
