@@ -10,13 +10,13 @@ public class Pod implements Serializable {
 apiVersion: v1
 kind: Pod
 metadata:
-  name: ${this.name}_v1
+  name: ${this.name}-${arch}
 spec:
   nodeSelector:
     type: worker
   containers:
-  - name: ${this.name}
-    image: btoll/${this.name}:latest
+  - name: ${this.name}-${arch}
+    image: btoll/${this.name}_${arch}:latest
     command: [ "sleep", "21600" ]
     env:
     - name: DOCKER_HOST

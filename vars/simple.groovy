@@ -15,7 +15,7 @@ def make(List<String> targets) {
         node(POD_LABEL) {
             checkout scm
 
-            container(project) {
+            container("${project}-amd64") {
                 targets.each {
                     stage (it) {
                         log.info "Running make target ${it}"
@@ -28,6 +28,7 @@ def make(List<String> targets) {
 }
 
 def test(List<String> archs) {
+    String project = getProjectName()
     Pod podManifest = new Pod(name: project)
     def pods = [:]
 
@@ -39,7 +40,7 @@ def test(List<String> archs) {
                 node(POD_LABEL) {
                     checkout scm
 
-                    container(project) {
+                    container("${project}-${it}") {
                         stage ("make test -> ${it}") {
                             log.info "Testing on arch ${it}"
                             sh "make test"
