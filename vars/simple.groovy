@@ -11,14 +11,16 @@ def make(List<String> targets) {
     String project = getProjectName()
     Pod podManifest = new Pod(name: project)
 
-    docker.image("btoll/${project}_amd64:latest").inside("-u root") {
+    podTemplate(yaml: podManifest.getManifest("amd64")) {
         node(POD_LABEL) {
             checkout scm
 
-            targets.each {
-                stage (it) {
-                    log.info "Running make target ${it}"
-                    sh "make ${it}"
+            container("${project}-amd64") {
+                targets.each {
+                    stage (it) {
+                        log.info "Running make target ${it}"
+                        sh "make ${it}"
+                    }
                 }
             }
         }
