@@ -1,14 +1,21 @@
 import k8s.manifest.Pod
 
-def make(List<String> targets) {
-    podManifest = new Pod(name: "indexer")
-    yaml = podManifest.getManifest("amd64")
+def getProjectName() {
+    // Returns the project/repo name, i.e.:
+    // https://github.com/algorand/indexer -> indexer
+    String url = scm.getUserRemoteConfigs()[0].getUrl()
+    return url.split("/")[-1]
+}
 
-    podTemplate(yaml: yaml) {
+def make(List<String> targets) {
+    String project = getProjectName()
+    Pod podManifest = new Pod(name: project)
+
+    podTemplate(yaml: podManifest.getManifest("amd64")) {
         node(POD_LABEL) {
             checkout scm
 
-            container("indexer") {
+            container(project) {
                 targets.each {
                     stage (it) {
                         log.info "Running make target ${it}"
@@ -21,18 +28,18 @@ def make(List<String> targets) {
 }
 
 def test(List<String> archs) {
-    podManifest = new Pod(name: "indexer")
+    Pod podManifest = new Pod(name: project)
     def pods = [:]
 
     archs.each {
-        yaml = podManifest.getManifest(it)
+        String yaml = podManifest.getManifest(it)
 
         pods[it] = {
             podTemplate(yaml: yaml) {
                 node(POD_LABEL) {
                     checkout scm
 
-                    container("indexer") {
+                    container(project) {
                         stage ("make test -> ${it}") {
                             log.info "Testing on arch ${it}"
                             sh "make test"
