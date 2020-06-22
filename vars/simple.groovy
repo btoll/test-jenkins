@@ -4,6 +4,8 @@ def getProjectName() {
     // Returns the project/repo name, i.e.:
     // https://github.com/algorand/indexer -> indexer
     String url = scm.getUserRemoteConfigs()[0].getUrl()
+//    String project = url.split("/")[-1]
+//    return project.replaceAll("-", "_")
     return url.split("/")[-1]
 }
 
